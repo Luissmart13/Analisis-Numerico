@@ -36,13 +36,15 @@ def Run_Kut4(F,x,y,xStop,h):
         x=x+h
         X.append(x)
         Y.append(y)
+        if y[2] < 0:  # Si el proyectil toca el suelo
+            break 
       return np.array(X),np.array(Y)
 
 def imprimeSol(X,Y,frec):
       def imprimeEncabezado(n):
-        print("\n x ",end=" ")
+        print("\n       x ",end="         ")
         for i in range (n):
-          print(" y[",i,"] ",end=" ")
+          print(" y[",i,"] ",end="      ")
         print()
     
       def imprimeLinea(x,y,n):
@@ -72,7 +74,7 @@ def F(x,y):
       return F
 
 y = np.array([x0, x1, y0, y1])
-X,Y=Run_Kut4(F, 0.0, y, 6.0, 0.05)
+X, Y= Run_Kut4(F, 0.0, y, 6.0, 0.005)
 print("La solución es")
 imprimeSol(X, Y, 4)
 
@@ -88,3 +90,6 @@ plt.title('Trayectoria con método de Runge-Kutta 4')
 
 plt.grid()
 plt.show()
+
+print(f'Tiempo de vuelo: {X[-1]:.2f} segundos')
+print(f'Alcance R: {Y[-1, 0]:.2f} metros')
